@@ -20,6 +20,11 @@ TEXT = (
 
 
 def main() -> None:
+    # Gate check, same as the competition's: 1 to 280 Unicode code
+    # points, not only white space. Fail loudly instead of writing an
+    # entry the gate would refuse.
+    if not 1 <= len(TEXT) <= 280 or not TEXT.strip():
+        raise SystemExit("entry text fails the 1-280 character gate")
     out_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "entry.txt").write_text(TEXT, encoding="utf-8")
